@@ -1,0 +1,16 @@
+<RCC>
+    <qresource prefix="/">
+        <file>images/screen.png</file>
+        <file>images/tv.png</file>
+        <file>images/countdown.mp4</file>
+        <file>images/a3.jpg</file>
+        <file>images/canalsur.jpg</file>
+        <file>images/la1.jpg</file>
+        <file>images/la2.jpg</file>
+        <file>images/tdp.jpg</file>
+        <file>images/rt.jpg</file>
+        <file>images/euronews.jpg</file>
+        <file>images/la24h.jpg</file>
+        <file>images/xplora.png</file>
+    </qresource>
+</RCC>
