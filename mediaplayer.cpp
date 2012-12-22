@@ -182,27 +182,65 @@
      QHBoxLayout *mainLayout = new QHBoxLayout(this);
      QVBoxLayout *channels = new QVBoxLayout(scrollAreaWidgetContents);
 
-     la1      = createChannel("la1",      QIcon(":/images/la1.jpg"), SLOT(channelClicked()));
-     la2      = createChannel("la2",      QIcon(":/images/la2.jpg"), SLOT(channelClicked()));
-     la24h    = createChannel("la24h",    QIcon(":/images/la24h.jpg"), SLOT(channelClicked()));
-     a3       = createChannel("a3"   ,    QIcon(":/images/a3.jpg"), SLOT(channelClicked()));
-     canalsur = createChannel("canalsur", QIcon(":/images/canalsur.jpg"), SLOT(channelClicked()));
-     rt       = createChannel("rt",       QIcon(":/images/rt.jpg"), SLOT(channelClicked()));
-     euronews = createChannel("euronews", QIcon(":/images/euronews.jpg"), SLOT(channelClicked()));
+     //la1      = createChannel("la1",      QIcon(":/images/la1.jpg"), SLOT(channelClicked()));
+     //la2      = createChannel("la2",      QIcon(":/images/la2.jpg"), SLOT(channelClicked()));
+     //la24h    = createChannel("la24h",    QIcon(":/images/la24h.jpg"), SLOT(channelClicked()));
+     a3       = createChannel("a3"   ,    QIcon(":/images/a3.png"), SLOT(channelClicked()));
+     lasexta  = createChannel("lasexta",  QIcon(":/images/lasexta.png"), SLOT(channelClicked()));
+     lasexta3 = createChannel("lasexta3", QIcon(":/images/lasexta3.png"), SLOT(channelClicked()));
+     neox     = createChannel("neox",     QIcon(":/images/neox.png"), SLOT(channelClicked()));
+     nitro    = createChannel("nitro",    QIcon(":/images/nitro.png"), SLOT(channelClicked()));
      xplora   = createChannel("xplora",   QIcon(":/images/xplora.png"), SLOT(channelClicked()));
 
-     channels->addWidget(la1);
-     channels->addWidget(la2);
-     channels->addWidget(la24h);
+
+     discovery= createChannel("discovery",QIcon(":/images/discovery.png"), SLOT(channelClicked()));
+     divinity = createChannel("divinity", QIcon(":/images/divinity.png"), SLOT(channelClicked()));
+     energy   = createChannel("energy",   QIcon(":/images/energy.png"), SLOT(channelClicked()));
+     euronews = createChannel("euronews", QIcon(":/images/euronews.png"), SLOT(channelClicked()));
+     paramount= createChannel("paramount",QIcon(":/images/paramount.png"), SLOT(channelClicked()));
+     rt       = createChannel("rt",       QIcon(":/images/rt.png"), SLOT(channelClicked()));
+
+
+     canalsur = createChannel("canalsur", QIcon(":/images/canalsur.png"), SLOT(channelClicked()));
+     la13tv   = createChannel("la13tv",   QIcon(":/images/la13tv.png"), SLOT(channelClicked()));
+     aljazeera= createChannel("aljazeera",QIcon(":/images/aljazeera.png"), SLOT(channelClicked()));
+     panamericana= createChannel("panamericana",QIcon(":/images/panamericana.png"), SLOT(channelClicked()));
+     globaltv = createChannel("globaltv",QIcon(":/images/globaltv.png"), SLOT(channelClicked()));
+     kisstv   = createChannel("kisstv",QIcon(":/images/kisstv.png"), SLOT(channelClicked()));
+     partytv  = createChannel("partytv",QIcon(":/images/partytv.png"), SLOT(channelClicked()));
+     lobastv  = createChannel("lobastv",QIcon(":/images/lobastv.png"), SLOT(channelClicked()));
+
+     //channels->addWidget(la1);
+     //channels->addWidget(la2);
+     //channels->addWidget(la24h);
      channels->addWidget(a3);
-     channels->addWidget(canalsur);
-     channels->addWidget(rt);
-     channels->addWidget(euronews);
+     channels->addWidget(lasexta);
+     channels->addWidget(lasexta3);
+     channels->addWidget(neox);
+     channels->addWidget(nitro);
      channels->addWidget(xplora);
+
+     channels->addWidget(discovery);
+     channels->addWidget(divinity);
+     channels->addWidget(energy);
+     channels->addWidget(euronews);
+     channels->addWidget(paramount);
+
+     channels->addWidget(rt);
+
+
+     channels->addWidget(canalsur);
+     channels->addWidget(la13tv);
+     channels->addWidget(aljazeera);
+     channels->addWidget(panamericana);
+     channels->addWidget(globaltv);
+     channels->addWidget(kisstv);
+     channels->addWidget(partytv);
+     channels->addWidget(lobastv);
 
 
      QPushButton *openButton = new QPushButton(this);
-     openButton->setIcon(style()->standardIcon(QStyle::SP_DialogOpenButton));
+     openButton->setIcon(style()->standardIcon(QStyle::SP_DesktopIcon));
 
      QPalette bpal;
      QColor arrowcolor = bpal.buttonText().color();
@@ -273,7 +311,7 @@
      // Create menu bar:
      fileMenu = new QMenu(this);
 
-     QMenu *aspectMenu = fileMenu->addMenu(tr("&Aspect ratio"));
+     QMenu *aspectMenu = fileMenu->addMenu(tr("&Aspecto"));
      QActionGroup *aspectGroup = new QActionGroup(aspectMenu);
      connect(aspectGroup, SIGNAL(triggered(QAction*)), this, SLOT(aspectChanged(QAction*)));
      aspectGroup->setExclusive(true);
@@ -281,7 +319,7 @@
      aspectActionAuto->setCheckable(true);
      aspectActionAuto->setChecked(true);
      aspectGroup->addAction(aspectActionAuto);
-     QAction *aspectActionScale = aspectMenu->addAction(tr("Scale"));
+     QAction *aspectActionScale = aspectMenu->addAction(tr("Escalado"));
      aspectActionScale->setCheckable(true);
      aspectGroup->addAction(aspectActionScale);
      QAction *aspectAction16_9 = aspectMenu->addAction(tr("16/9"));
@@ -291,19 +329,19 @@
      aspectAction4_3->setCheckable(true);
      aspectGroup->addAction(aspectAction4_3);
 
-     QMenu *scaleMenu = fileMenu->addMenu(tr("&Scale mode"));
+     QMenu *scaleMenu = fileMenu->addMenu(tr("&Modo de escalado"));
      QActionGroup *scaleGroup = new QActionGroup(scaleMenu);
      connect(scaleGroup, SIGNAL(triggered(QAction*)), this, SLOT(scaleChanged(QAction*)));
      scaleGroup->setExclusive(true);
-     QAction *scaleActionFit = scaleMenu->addAction(tr("Fit in view"));
+     QAction *scaleActionFit = scaleMenu->addAction(tr("Ajustar"));
      scaleActionFit->setCheckable(true);
      scaleActionFit->setChecked(true);
      scaleGroup->addAction(scaleActionFit);
-     QAction *scaleActionCrop = scaleMenu->addAction(tr("Scale and crop"));
+     QAction *scaleActionCrop = scaleMenu->addAction(tr("Escalar y recortar"));
      scaleActionCrop->setCheckable(true);
      scaleGroup->addAction(scaleActionCrop);
 
-     m_fullScreenAction = fileMenu->addAction(tr("Full screen video"));
+     m_fullScreenAction = fileMenu->addAction(tr("Pantalla completa"));
      m_fullScreenAction->setCheckable(true);
      m_fullScreenAction->setEnabled(false); // enabled by hasVideoChanged
      bool b = connect(m_fullScreenAction, SIGNAL(toggled(bool)), m_videoWidget, SLOT(setFullScreen(bool)));
@@ -312,7 +350,7 @@
      Q_ASSERT(b);
 
      fileMenu->addSeparator();
-     QAction *settingsAction = fileMenu->addAction(tr("&Settings..."));
+     QAction *settingsAction = fileMenu->addAction(tr("&Opciones"));
 
      // Setup signal connections:
         openButton->setMenu(fileMenu);
@@ -382,8 +420,6 @@
              // Fall through
 
          case Phonon::PausedState:
-             ////////////    m_MediaObject.seek(1000);
-                ///////// m_MediaObject.play();
              break;
          case Phonon::PlayingState:
              if (m_MediaObject.hasVideo())
@@ -441,7 +477,7 @@
      }
 
      // Insert audio effects:
-     ui->audioEffectsCombo->addItem(tr("<no effect>"));
+     ui->audioEffectsCombo->addItem(tr("<sin efecto>"));
      QList<Phonon::Effect *> currEffects = m_audioOutputPath.effects();
      Phonon::Effect *currEffect = currEffects.size() ? currEffects[0] : 0;
      QList<Phonon::EffectDescription> availableEffects = Phonon::BackendCapabilities::availableAudioEffects();
@@ -557,7 +593,7 @@
          Phonon::EffectDescription chosenEffect = availableEffects[ui->audioEffectsCombo->currentIndex() - 1];
 
          QDialog effectDialog;
-         effectDialog.setWindowTitle(tr("Configure effect"));
+         effectDialog.setWindowTitle(tr("Configurar efecto"));
          QVBoxLayout *topLayout = new QVBoxLayout(&effectDialog);
 
          QLabel *description = new QLabel("<b>Description:</b><br>" + chosenEffect.description(), &effectDialog);
@@ -682,22 +718,54 @@ void MediaPlayer::channelClicked(){
 
     QString comando="";
 
-    if (text=="la1")
-        comando="rtmpdump -r rtmp://cp68975.live.edgefcs.net:1935/live --playpath LA1_AKA_WEB_NOG@58877 -W http://www.rtve.es/swf/4.1.11/RTVEPlayerVideo.swf -p http://www.rtve.es/noticias/directo-la-1 -t rtmp://cp68975.live.edgefcs.net:1935/live -v -q -o /tmp/iTV";
-    else if (text=="la2")
-        comando="rtmpdump -r rtmp://cp68975.live.edgefcs.net:1935/live --playpath LA2_AKA_WEB_NOG@60554 -W http://www.rtve.es/swf/4.1.11/RTVEPlayerVideo.swf -p http://www.rtve.es/television/la-2-directo -t rtmp://cp68975.live.edgefcs.net:1935/live -q -v -o /tmp/iTV";
+    //if (text=="la1")
+    //    comando="rtmpdump -r rtmp://cp68975.live.edgefcs.net:1935/live --playpath LA1_AKA_WEB_NOG@58877 -W http://www.rtve.es/swf/4.1.11/RTVEPlayerVideo.swf -p http://www.rtve.es/noticias/directo-la-1 -t rtmp://cp68975.live.edgefcs.net:1935/live -v -q -o /tmp/iTV";
+    //else if (text=="la2")
+    //    comando="rtmpdump -r rtmp://cp68975.live.edgefcs.net:1935/live --playpath LA2_AKA_WEB_NOG@60554 -W http://www.rtve.es/swf/4.1.11/RTVEPlayerVideo.swf -p http://www.rtve.es/television/la-2-directo -t rtmp://cp68975.live.edgefcs.net:1935/live -q -v -o /tmp/iTV";
     //else if (text=="la24h")
     //    comando="
-    else if (text=="a3")
+    if (text=="a3")
         comando="rtmpdump -r rtmp://antena3fms35livefs.fplive.net:1935/antena3fms35live-live --playpath stream-antena3 -W http://www.antena3.com/static/swf/A3Player.swf?nocache=200 -p http://www.antena3.com/directo/ -q -v -o /tmp/iTV";
-    //else if (text=="canalsur")
-    //    comando="
-    else if (text=="rt")
-        comando="rtmpdump -r rtmp://149.11.34.6/live --playpath russiantoday.stream -q -v -o /tmp/iTV";
-    else if (text=="euronews")
-        comando="rtmpdump -r rtmp://fr-par-1.stream-relay.hexaglobe.net:1935/rtpeuronewslive --playpath es_video350_flash_all.sdp -W http://es.euronews.com/media/player_live_1_14.swf -p http://es.euronews.com/noticias/en-directo/ -q -v -o /tmp/iTV";
+    else if (text=="lasexta")
+        comando="rtmpdump -r rtmp://antena3fms35livefs.fplive.net:1935/antena3fms35live-live/stream-lasexta -W http://www.antena3.com/static/swf/A3Player.swf -p http://www.lasexta.com/directo -q -v -o /tmp/iTV";
+    else if (text=="lasexta3")
+        comando="rtmpdump -r rtmp://174.36.251.140/live/lasexta3lacaja?id=15912 -W http://www.ucaster.eu/static/scripts/eplayer.swf -p http:schuster92.com -q -v -o /tmp/iTV";
+    else if (text=="neox")
+        comando="rtmpdump -r rtmp://live.zcast.us:1935/liveorigin/_definst_ --playpath neoxlacaja-lI7mjw6RDa -W http://player.zcast.us/player58.swf -p http://zcast.us/gen.php?ch=neoxlacaja-lI7mjw6RDa&width=670&height=400 -q -v -o /tmp/iTV";
+    else if (text=="nitro")
+        comando="rtmpdump -r rtmp://173.193.242.248/live --playpath nitrolacajatv?id=126587 -W http://mips.tv/content/scripts/eplayer.swf -p http://mips.tv/embedplayer/nitrolacajatv/1/670/400 -q -v -o /tmp/iTV";
     else if (text=="xplora")
         comando="rtmpdump -r rtmp://antena3fms35geobloqueolivefs.fplive.net:1935/antena3fms35geobloqueolive-live/stream-xplora -W http://www.antena3.com/static/swf/A3Player.swf -p http://www.lasexta.com/xplora/directo -q -v -o /tmp/iTV";
+
+    else if (text=="discovery")
+        comando="rtmpdump -r rtmp://184.173.181.44/live --playpath discoverylacajatv?id=14680 -W http://www.ucaster.eu/static/scripts/eplayer.swf -p http://www.ucaster.eu/embedded/discoverylacajatv/1/650/400 -q -v -o /tmp/iTV";
+    else if (text=="divinity")
+        comando="rtmpdump -r rtmp://68.68.17.102/live --playpath discomaxlacajatv -W http://www.udemy.com/static/flash/player5.9.swf -p http://www.castamp.com/embed.php?c=discomaxlacajatv&tk=5mD8Tatf&vwidth=650&vheight=400 -q -v -o /tmp/iTV";
+    else if (text=="energy")
+        comando="rtmpdump -r rtmp://68.68.31.224/live --playpath lacajatvenergy -W http://www.udemy.com/static/flash/player5.9.swf -p http://www.castamp.com/embed.php?c=lacajatvenergy&vwidth=670&vheight=400 -q -v -o /tmp/iTV";
+    else if (text=="euronews")
+        comando="rtmpdump -r rtmp://fr-par-1.stream-relay.hexaglobe.net:1935/rtpeuronewslive --playpath es_video350_flash_all.sdp -W http://es.euronews.com/media/player_live_1_14.swf -p http://es.euronews.com/noticias/en-directo/ -q -v -o /tmp/iTV";
+    else if (text=="paramount")
+        comando="rtmpdump -r rtmp://173.193.46.109/live --playpath 179582 -W http://static.castalba.tv/player.swf -p http://castalba.tv/embed.php?cid=9947&wh=680&ht=400&r=lacajatv.es -q -v -o /tmp/iTV";
+    else if (text=="rt")
+        comando="rtmpdump -r rtmp://149.11.34.6/live --playpath russiantoday.stream -q -v -o /tmp/iTV";
+
+    else if (text=="canalsur")
+        comando="wget --quiet -O /tmp/iTV http://195.10.10.220/rtva/andaluciatelevisionh264.flv";
+    else if (text=="la13tv")
+        comando="rtmpdump -r rtmp://xiiitvlivefs.fplive.net/xiiitvlive-live --playpath stream13tv -W http://static.hollybyte.com/public/players/flowplayer/swf/flowplayer.commercial.swf -p http://live.13tv.hollybyte.tv/embed/4f33a91894a05f5f49020000 -q -v -o /tmp/iTV";
+    else if (text=="aljazeera")
+        comando="rtmpdump -r rtmp://aljazeeraflashlivefs.fplive.net:1935/aljazeeraflashlive-live --playpath aljazeera_eng_high -W http://admin.brightcove.com/viewer/us20121113.1511/federatedVideoUI/BrightcovePlayer.swf -p http://www.aljazeera.com/watch_now/ -q -v -o /tmp/iTV";
+    else if (text=="panamericana")
+        comando="rtmpdump -r rtmp://demo5.iblups.com/demo --playpath nm5esQgmkT  -W http://iblups.com/playertvlive123456789panamericanatv.swf -p http://iblups.com/e_panamericanatv-490-320 -q -v -o /tmp/iTV";
+    else if (text=="globaltv")
+        comando="rtmpdump -r rtmp://demo13.iblups.com/demo --playpath hTWNttHSsq -W http://iblups.com/playertvlive123456789globaltv.swf -p http://iblups.com/e_globaltv-490-33 -q -v -o /tmp/iTV";
+    else if (text=="kisstv")
+        comando="rtmpdump -r rtmp://kisstelevision.es.flash3.glb.ipercast.net/kisstelevision.es-live --playpath live -W http://kisstelevision.en-directo.com/kisstelevision_avw.swf -p http://www.kisstelevision.es -q -v -o /tmp/iTV";
+    else if (text=="lobastv")
+        comando="rtmpdump -r rtmp://149.11.34.6/live --playpath lobas.stream -q -v -o /tmp/iTV";
+    else if (text=="partytv")
+        comando="rtmpdump -r rtmp://149.11.34.6/live --playpath partytv.stream -q -v -o /tmp/iTV";
     else
         qDebug () << "Cadena " << text << " no reconocida";
 
@@ -1056,7 +1124,7 @@ QToolButton *MediaPlayer::createChannel(const QString &text,const QIcon &icon, c
 
  void MediaPlayer::scaleChanged(QAction *act)
  {
-     if (act->text() == tr("Scale and crop"))
+     if (act->text() == tr("Escalar y recortar"))
          m_videoWidget->setScaleMode(Phonon::VideoWidget::ScaleAndCrop);
      else
          m_videoWidget->setScaleMode(Phonon::VideoWidget::FitInView);
@@ -1066,7 +1134,7 @@ QToolButton *MediaPlayer::createChannel(const QString &text,const QIcon &icon, c
  {
      if (act->text() == tr("16/9"))
          m_videoWidget->setAspectRatio(Phonon::VideoWidget::AspectRatio16_9);
-     else if (act->text() == tr("Scale"))
+     else if (act->text() == tr("Escalado"))
          m_videoWidget->setAspectRatio(Phonon::VideoWidget::AspectRatioWidget);
      else if (act->text() == tr("4/3"))
          m_videoWidget->setAspectRatio(Phonon::VideoWidget::AspectRatio4_3);

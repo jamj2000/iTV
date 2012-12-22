@@ -17,25 +17,7 @@
  SOURCES += main.cpp mediaplayer.cpp
  HEADERS += mediaplayer.h
 
- target.path = $$[QT_INSTALL_DEMOS]/qmediaplayer
+ target.path = $$[QT_INSTALL_DEMOS]/iTV
  sources.files = $$SOURCES $$HEADERS $$FORMS $$RESOURCES *.pro *.html *.doc images
- sources.path = $$[QT_INSTALL_DEMOS]/qmediaplayer
+ sources.path = $$[QT_INSTALL_DEMOS]/iTV
  INSTALLS += target sources
-
- wince*{
- DEPLOYMENT_PLUGIN += phonon_ds9 phonon_waveout
- }
-
- symbian {
-     TARGET.UID3 = 0xA000C613
-
-      addFiles.sources = ../embedded/desktopservices/data/sax.mp3
-      addFiles.path = /data/sounds/
-      DEPLOYMENT += addFiles
-
-     include($$QT_SOURCE_TREE/demos/symbianpkgrules.pri)
-
-         LIBS += -lcommdb
-
-     TARGET.CAPABILITY="NetworkServices"
- } 

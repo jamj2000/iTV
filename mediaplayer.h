@@ -191,14 +191,32 @@
      QScrollArea *scrollArea;
      QWidget *scrollAreaWidgetContents;
 
-     QToolButton *la1;
-     QToolButton *la2;
-     QToolButton *la24h;
-     QToolButton *rt;
-     QToolButton *euronews;
+     //QToolButton *la1;
+     //QToolButton *la2;
+     //QToolButton *la24h;
      QToolButton *a3;
-     QToolButton *canalsur;
+     QToolButton *lasexta;
+     QToolButton *lasexta3;
+     QToolButton *neox;
+     QToolButton *nitro;
      QToolButton *xplora;
+
+     QToolButton *discovery;
+     QToolButton *divinity;
+     QToolButton *energy;
+     QToolButton *euronews;
+     QToolButton *paramount;
+     QToolButton *rt;
+
+
+     QToolButton *canalsur;
+     QToolButton *la13tv;
+     QToolButton *aljazeera;
+     QToolButton *panamericana;
+     QToolButton *globaltv;
+     QToolButton *kisstv;
+     QToolButton *partytv;
+     QToolButton *lobastv;
 
  };
 
