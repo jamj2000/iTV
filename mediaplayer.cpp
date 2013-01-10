@@ -44,6 +44,7 @@
 
 #include <QTemporaryFile>
 #include <QToolButton>
+#include <QMovie>
 
  #define SLIDER_RANGE 8
 
@@ -54,6 +55,7 @@
 #include <sys/stat.h>
 
 #include <unistd.h>
+
 
 
 
@@ -173,6 +175,7 @@
      setContextMenuPolicy(Qt::CustomContextMenu);
      m_videoWidget->setContextMenuPolicy(Qt::CustomContextMenu);
 
+     espera = new QMovie(":/images/wait.gif");
      scrollArea = new QScrollArea();
      scrollArea->setFixedWidth(130);
      scrollArea->setWidgetResizable(true);
@@ -210,6 +213,33 @@
      partytv  = createChannel("partytv",QIcon(":/images/partytv.png"), SLOT(channelClicked()));
      lobastv  = createChannel("lobastv",QIcon(":/images/lobastv.png"), SLOT(channelClicked()));
 
+     buttons = new QButtonGroup ();
+
+     buttons->addButton(a3);
+     buttons->addButton(lasexta);
+     buttons->addButton(lasexta3);
+     buttons->addButton(neox);
+     buttons->addButton(nitro);
+     buttons->addButton(xplora);
+
+     buttons->addButton(discovery);
+     buttons->addButton(divinity);
+     buttons->addButton(energy);
+     buttons->addButton(euronews);
+     buttons->addButton(paramount);
+     buttons->addButton(rt);
+
+     buttons->addButton(canalsur);
+     buttons->addButton(la13tv);
+     buttons->addButton(aljazeera);
+     buttons->addButton(panamericana);
+     buttons->addButton(globaltv);
+     buttons->addButton(kisstv);
+     buttons->addButton(partytv);
+     buttons->addButton(lobastv);
+
+
+
      //channels->addWidget(la1);
      //channels->addWidget(la2);
      //channels->addWidget(la24h);
@@ -225,7 +255,6 @@
      channels->addWidget(energy);
      channels->addWidget(euronews);
      channels->addWidget(paramount);
-
      channels->addWidget(rt);
 
 
@@ -261,8 +290,8 @@
      info = new QLabel(this);
      info->setFrameShape(QFrame::NoFrame);
      info->setFrameShadow(QFrame::Plain);
-     info->setMinimumSize(400,300);
-     info->setMaximumSize(1200,900);
+     info->setMinimumSize(800,450);
+     info->setMaximumSize(1600,900);
      info->setAcceptDrops(false);
      info->setMargin(2);
      //info->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
@@ -378,10 +407,13 @@
 
 
  MediaPlayer::~MediaPlayer() {
-     process->kill();
-     delete process;
+     if (process) {
+        process->kill();
+        delete process;
+     }
 
-     unlink (fifo);
+     if (fifo)
+         unlink (fifo);
 
  }
 
@@ -711,12 +743,37 @@
 
  ///////////////
 
+void MediaPlayer::Espera (QString cadena){
+    m_videoWindow.hide();
+    espera->start();
+    info->setMovie(espera);
+    info->setAlignment(Qt::AlignRight|Qt::AlignBottom);
+    info->setStyleSheet(QString("background-position: center; background-image: url(:/images/%1.png);background-attachment: fixed; background-repeat: no-repeat; ").arg(cadena));
+    info->show();
+}
+
+
 void MediaPlayer::channelClicked(){
     QToolButton *clickedButton = qobject_cast<QToolButton *>(sender());
     QString text = clickedButton->text();
     qDebug() << text;
 
+    if (m_MediaObject.state() == Phonon::PlayingState)
+        m_MediaObject.pause();
+        //   m_MediaObject.clear();
+
+    if (process) {
+        process->close();
+        //process->kill();
+        delete process;
+    }
+    unlink(fifo);
+
+
     QString comando="";
+    int err = mkfifo (fifo, 0777);
+
+
 
     //if (text=="la1")
     //    comando="rtmpdump -r rtmp://cp68975.live.edgefcs.net:1935/live --playpath LA1_AKA_WEB_NOG@58877 -W http://www.rtve.es/swf/4.1.11/RTVEPlayerVideo.swf -p http://www.rtve.es/noticias/directo-la-1 -t rtmp://cp68975.live.edgefcs.net:1935/live -v -q -o /tmp/iTV";
@@ -724,8 +781,9 @@ void MediaPlayer::channelClicked(){
     //    comando="rtmpdump -r rtmp://cp68975.live.edgefcs.net:1935/live --playpath LA2_AKA_WEB_NOG@60554 -W http://www.rtve.es/swf/4.1.11/RTVEPlayerVideo.swf -p http://www.rtve.es/television/la-2-directo -t rtmp://cp68975.live.edgefcs.net:1935/live -q -v -o /tmp/iTV";
     //else if (text=="la24h")
     //    comando="
+    Espera (text);
     if (text=="a3")
-        comando="rtmpdump -r rtmp://antena3fms35livefs.fplive.net:1935/antena3fms35live-live --playpath stream-antena3 -W http://www.antena3.com/static/swf/A3Player.swf?nocache=200 -p http://www.antena3.com/directo/ -q -v -o /tmp/iTV";
+        comando="rtmpdump -r rtmp://antena3fms35livefs.fplive.net:1935/antena3fms35live-live --playpath stream-antena3 -W http://www.antena3.com/static/swf/A3Player.swf?nocache=200 -p http://www.antena3.com/directo/ -q -v -o /tmp/iTV";    
     else if (text=="lasexta")
         comando="rtmpdump -r rtmp://antena3fms35livefs.fplive.net:1935/antena3fms35live-live/stream-lasexta -W http://www.antena3.com/static/swf/A3Player.swf -p http://www.lasexta.com/directo -q -v -o /tmp/iTV";
     else if (text=="lasexta3")
@@ -772,29 +830,11 @@ void MediaPlayer::channelClicked(){
 
     //comando.append (" /tmp/iTV");
 
-    if (process) {
-        process->kill();
-        delete process;
-    }
-    unlink(fifo);
-    if (flujo){
-        flujo->close();
-        delete flujo;
-    }
-
-
-    if (m_MediaObject.state() == Phonon::PlayingState)
-        m_MediaObject.pause();
-
-
-    int err = mkfifo (fifo, 0777);
     if (comando!="") {
         process = new QProcess();
         process->start(comando);
         qDebug() << comando;
     }
-
-
 
     m_MediaObject.setCurrentSource(Phonon::MediaSource(QString("file:///tmp/iTV")));
     m_MediaObject.play();
@@ -810,6 +850,9 @@ QToolButton *MediaPlayer::createChannel(const QString &text,const QIcon &icon, c
     button->setIcon(icon);
     button->setText(text);
     button->setIconSize(QSize(90,90));
+    button->setCheckable(true);
+    button->setStyleSheet("QToolButton:checked {border: 2px solid #ffffff; background-color: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1,  stop: 0 #ffffff, stop: 1 #5555ff);}");
+
     connect(button, SIGNAL(clicked()), this, member);
     return button;
 }
@@ -860,14 +903,6 @@ QToolButton *MediaPlayer::createChannel(const QString &text,const QIcon &icon, c
      //process.start("rtmpdump -r rtmp://149.11.34.6/live --playpath russiantoday.stream -q -v -o /tmp/caca");
      //m_MediaObject.setCurrentSource(Phonon::MediaSource(QString("file:///tmp/caca")));
      //QResource res(":/images/wait.flv");
-
-     //QResource res(":/images/countdown.mp4");
-     //QTemporaryFile f;
-     //f.open();
-     //f.write((char*)res.data(),res.size());
-     //f.flush();
-     //f.setAutoRemove(true);
-     //f.close();
 
        m_MediaObject.setCurrentSource(Phonon::MediaSource(QString("file:///tmp/caca")));
        m_MediaObject.play();
@@ -954,6 +989,7 @@ QToolButton *MediaPlayer::createChannel(const QString &text,const QIcon &icon, c
 
  void MediaPlayer::updateInfo()
  {
+     /*
      int maxLength = 30;
      QString font = "<font color=#ffeeaa>";
      QString fontmono = "<font family=\"monospace,courier new\" color=#ffeeaa>";
@@ -985,11 +1021,13 @@ QToolButton *MediaPlayer::createChannel(const QString &text,const QIcon &icon, c
          if (fileName.length() > maxLength)
              fileName = fileName.left(maxLength) + "...";
          title = font + fileName + "</font>";
+
          if (m_MediaObject.currentSource().type() == Phonon::MediaSource::Url) {
              title.prepend("Url: ");
          } else {
              title.prepend("File: ");
          }
+
      }
 
      QString artist;
@@ -1000,7 +1038,9 @@ QToolButton *MediaPlayer::createChannel(const QString &text,const QIcon &icon, c
      if (trackBitrate != 0)
          bitrate = "<br>Bitrate:  " + font + QString::number(trackBitrate/1000) + "kbit</font>";
 
-     info->setText(title + artist + bitrate);
+     */
+
+     //info->setText(title + artist + bitrate);
  }
 
  void MediaPlayer::updateTime()

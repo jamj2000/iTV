@@ -72,6 +72,7 @@
  class QTextEdit;
  class QMenu;
  class Ui_settings;
+ class QMovie;
 
  class MediaPlayer;
 
@@ -160,6 +161,7 @@
 
  private:
      bool playPauseForDialog();
+     void Espera (QString cadena);
 
      QToolButton *createChannel(const QString &text, const QIcon &icon, const char *member);
 
@@ -183,13 +185,15 @@
      bool m_smallScreen;
 
      QProcess *process=NULL;
-     QTemporaryFile *flujo=NULL;
+     //QTemporaryFile *flujo=NULL;
 
      const char *fifo = "/tmp/iTV";
      QString channel;
 
      QScrollArea *scrollArea;
      QWidget *scrollAreaWidgetContents;
+
+     QButtonGroup *buttons;
 
      //QToolButton *la1;
      //QToolButton *la2;
@@ -217,6 +221,8 @@
      QToolButton *kisstv;
      QToolButton *partytv;
      QToolButton *lobastv;
+
+     QMovie *espera;
 
  };
 
