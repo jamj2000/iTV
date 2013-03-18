@@ -1,0 +1,30 @@
+<RCC>
+    <qresource prefix="/">
+        <file>images/tv.png</file>
+        <file>images/la1.jpg</file>
+        <file>images/la2.jpg</file>
+        <file>images/tdp.jpg</file>
+        <file>images/a3.png</file>
+        <file>images/canalsur.png</file>
+        <file>images/discovery.png</file>
+        <file>images/divinity.png</file>
+        <file>images/energy.png</file>
+        <file>images/euronews.png</file>
+        <file>images/la13tv.png</file>
+        <file>images/lasexta.png</file>
+        <file>images/lasexta3.png</file>
+        <file>images/nitro.png</file>
+        <file>images/paramount.png</file>
+        <file>images/xplora.png</file>
+        <file>images/rt.png</file>
+        <file>images/aljazeera.png</file>
+        <file>images/kisstv.png</file>
+        <file>images/panamericana.png</file>
+        <file>images/lobastv.png</file>
+        <file>images/partytv.png</file>
+        <file>images/neox.png</file>
+        <file>images/globaltv.png</file>
+        <file>images/screen.png</file>
+        <file>images/wait.gif</file>
+    </qresource>
+</RCC>
