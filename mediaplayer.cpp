@@ -10,9 +10,8 @@
 **
 ***************************************************************************/
 
-
- #include <QtGui>
- #include "librtmp/rtmp.h"
+#include <QtGui>
+// #include "librtmp/rtmp.h"
 
 #include <QTemporaryFile>
 #include <QToolButton>
