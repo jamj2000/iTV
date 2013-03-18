@@ -1,11 +1,5 @@
-iTV
-----
+iTV: TV on Linux (KDE)
 
-TV on Linux (KDE)
-
-Developed with QT. Uses rtmpdump to download rtmp streams.
+Developed with QT. 
+Uses rtmpdump to download rtmp streams.
 rtmpdump command must be installed.
-
-
-
-
