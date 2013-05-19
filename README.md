@@ -8,4 +8,5 @@ iTV
 * rtmpdump command must be installed.
 
 ***
-![Screenshot](screenshots/itv-capture.png "itv capture")
+![Screenshot1](screenshots/itv-capture.png "itv capture 1")
+![Screenshot2](screenshots/itv-capture9.png "itv capture 2")
